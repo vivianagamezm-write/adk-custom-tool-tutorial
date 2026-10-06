@@ -28,11 +28,16 @@ optional production decision.
 ## Request flow
 
 ```mermaid
-flowchart LR
-    U[User asks for a word count] --> A[ADK agent]
-    A --> T[count_words tool]
-    T --> A
-    A --> R[Response to user]
+sequenceDiagram
+    participant U as User
+    participant A as ADK agent
+    participant T as count_words tool
+    U->>A: Ask for a word count
+    opt Agent chooses to use the tool
+        A->>T: count_words(text)
+        T-->>A: "The text contains 4 words."
+    end
+    A-->>U: Respond to the user
 ```
 
 ## Source and scope
